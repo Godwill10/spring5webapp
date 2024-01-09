@@ -1,17 +1,21 @@
 package guru.springframework.spring5webapp.domain;
 
+import org.hibernate.annotations.GenericGenerator;
+
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
 public class Author {
     @Id
-    @GeneratedValue(strategy =  GenerationType.AUTO)
+    @GeneratedValue(generator = "uuid")
+    @GenericGenerator(name = "uuid", strategy = "org.hibernate.id.UUIDGenerator")
     private String firstName;
     private  String lastName;
     private  Long id;
     @ManyToMany(mappedBy = "authors")
-    public  Set<Book> books;
+    public  Set<Book> books = new HashSet<>();
 
     public Set<Book> getBooks() {
         return books;
